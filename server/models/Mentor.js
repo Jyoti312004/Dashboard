@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const mentorSchema = new mongoose.Schema({
   name: {
@@ -18,4 +18,4 @@ const mentorSchema = new mongoose.Schema({
 
 const Mentor = mongoose.model('Mentor', mentorSchema);
 
-module.exports = Mentor;
+export default Mentor;

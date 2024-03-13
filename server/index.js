@@ -1,13 +1,19 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const Student = require('../server/models/Student');
-require('dotenv').config(); 
+import express from 'express';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import Student from './models/Student.js';
+import Mentor from './models/Mentor.js';
+
+dotenv.config();
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const PORT = process.env.PORT || 3001;
-mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-.then(async () => {
+
+mongoose.connect(process.env.MONGO_URL)
+  .then(async () => {
     console.log('Connected to MongoDB');
 
     // const Names = [
@@ -23,7 +29,20 @@ mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopol
     //   await student.save();
     //   students.push(student);
     // }
-
+    // const mentorNames = [
+    //   'Arjun', 'Neha', 'Aarti', 'Raj', 'Priya', 'Ankit', 'Shreya', 'Vikram', 'Kriti', 'Siddharth'
+    // ];
+    // const mentors = [];
+    // for (let i = 0; i < mentorNames.length; i++) {
+    //   const mentor = new Mentor({
+    //     name: mentorNames[i],
+    //     email: `${mentorNames[i]}${i + 1}@example.com`, 
+    //     students: []
+    //   });
+    //   await mentor.save();
+    //   mentors.push(mentor);
+    // }
+    
     app.listen(PORT, () => console.log(`Server Port: ${PORT} && connected to database`));
   })
   .catch((error) => console.log(`${error} did not connect`));

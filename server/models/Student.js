@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const studentSchema = new mongoose.Schema({
   name: {
@@ -15,7 +15,8 @@ const studentSchema = new mongoose.Schema({
     default: false
   },
   mentorEmail: {
-    type: String
+    type: String,
+    default :""
   },
   isEvaluated: {
     type: Boolean,
@@ -47,4 +48,4 @@ const studentSchema = new mongoose.Schema({
 
 const Student = mongoose.model('Student', studentSchema);
 
-module.exports = Student;
+export default Student;
