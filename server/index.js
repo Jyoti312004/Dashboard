@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import Student from './models/Student.js';
 import Mentor from './models/Mentor.js';
+import evaluationRoutes from './routes/evaluationRoutes.js'
+import lock from './routes/studentProfile.js';
 
 dotenv.config();
 
@@ -46,6 +48,9 @@ mongoose.connect(process.env.MONGO_URL)
     app.listen(PORT, () => console.log(`Server Port: ${PORT} && connected to database`));
   })
   .catch((error) => console.log(`${error} did not connect`));
+  app.use('/evaluations', evaluationRoutes);
+  app.use('/student',lock);
+
 
   app.get('/getStudent',async (req,res)=>{
       const data = await Student.find();
