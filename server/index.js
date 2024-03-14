@@ -5,11 +5,14 @@ import Student from './models/Student.js';
 import Mentor from './models/Mentor.js';
 import evaluationRoutes from './routes/evaluationRoutes.js'
 import lock from './routes/studentProfile.js';
+import mentor from './routes/mentor.js'
+import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 const PORT = process.env.PORT || 3001;
@@ -27,6 +30,7 @@ mongoose.connect(process.env.MONGO_URL)
     //   const student = new Student({
     //     name: Names[i],
     //     rollNo: `2025${i + 1}`,
+    //     email: `${Names[i]}${`2025${i+1}`}@example.com`, 
     //   });
     //   await student.save();
     //   students.push(student);
@@ -50,11 +54,6 @@ mongoose.connect(process.env.MONGO_URL)
   .catch((error) => console.log(`${error} did not connect`));
   app.use('/evaluations', evaluationRoutes);
   app.use('/student',lock);
+  app.use('/mentor',mentor);
 
-
-
-  app.get('/getMentor',async(req,res)=>{
-    const mentee = await Mentor.find();
-    res.status(200).json(mentee);
-  })
 
