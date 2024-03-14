@@ -7,8 +7,8 @@ const router = express.Router();
 router.patch('/assign',assign);
 router.patch('/:studentId/lock',lockedStudent);
 router.get('/getStudent',getAllStudents);
-router.get('/mentorAssignStudent',getAssignStudent);
-router.get('/mentorEvaluatedStudent',getEvaluatedStudent);
-router.get('/getFinalStudents',getFinalList);
+router.get('/mentorAssignStudent/:mentorId',getAssignStudent);
+router.get('/mentorEvaluatedStudent/:mentorId',getEvaluatedStudent);
+router.get('/getFinalStudents/:mentorId ',getFinalList);
 router.post('/sendEmail',sendMarkSheet)
 export default router;

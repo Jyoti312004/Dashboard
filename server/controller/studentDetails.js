@@ -16,7 +16,7 @@ export const getAllStudents = async (req, res) => {
 
 export const getAssignStudent = async (req, res) => {
   try {
-    const { mentorId } = req.body;
+    const { mentorId } = req.parmas;
 
     const mentor = await Mentor.findById(mentorId);
 
@@ -40,7 +40,7 @@ export const getAssignStudent = async (req, res) => {
 
 export const getEvaluatedStudent = async (req, res) => {
     try {
-      const { mentorId } = req.body;
+      const { mentorId } = req.params;
   
       const mentor = await Mentor.findById(mentorId);
   
@@ -65,7 +65,7 @@ export const getEvaluatedStudent = async (req, res) => {
 
   export const getFinalList = async (req, res) => {
     try {
-      const { mentorId } = req.body;
+      const { mentorId } = req.parmas;
   
       const mentor = await Mentor.findById(mentorId);
   

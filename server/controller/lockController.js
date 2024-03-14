@@ -1,4 +1,3 @@
-
 import Student from '../models/Student.js';
 import Mentor from '../models/Mentor.js';
 
@@ -20,6 +19,11 @@ export const lockedStudent = async(req,res)=>{
 
         if (mentor.email !== student.mentorEmail) {
             return res.status(403).json({ message: "Mentor email does not match" });
+        }
+
+        if(student.isEvaluated == false)
+        {
+            return res.status(402).json({message: "Student is not yet Evaluated, Please evaluate the student first! "});
         }
 
         student.isFinal = true;
