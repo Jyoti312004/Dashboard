@@ -52,10 +52,7 @@ mongoose.connect(process.env.MONGO_URL)
   app.use('/student',lock);
 
 
-  app.get('/getStudent',async (req,res)=>{
-      const data = await Student.find();
-      res.status(200).json(data);
-  });
+
   app.get('/getMentor',async(req,res)=>{
     const mentee = await Mentor.find();
     res.status(200).json(mentee);

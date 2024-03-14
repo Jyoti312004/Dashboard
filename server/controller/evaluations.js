@@ -1,4 +1,3 @@
-import express from 'express';
 import Student from '../models/Student.js';
 
 // Corrected export statement
