@@ -15,6 +15,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import Header from './Header';
+import Box from '@mui/material/Box';
+import { Grid } from '@mui/material';
 
 function createData(rollNo, name, ideation, execution, viva, totalMarks) {
     return { rollNo, name, ideation, execution, viva, totalMarks };
@@ -83,46 +86,63 @@ const FinalList = () => {
 
     return (
         <>
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell align="left">Roll No</TableCell>
-                            <TableCell align="left">Name</TableCell>
-                            <TableCell align="right">Ideation</TableCell>
-                            <TableCell align="right">Execution</TableCell>
-                            <TableCell align="right">Viva</TableCell>
-                            <TableCell align="right">Total Marks</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows.map((row) => (
-                            <TableRow
-                                key={row.name}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                                <TableCell component="th" scope="row">
-                                    {row.rollNo}
-                                </TableCell>
-                                <TableCell align="left">{row.name}</TableCell>
-                                <TableCell align="right">{row.ideation}</TableCell>
-                                <TableCell align="right">{row.execution}</TableCell>
-                                <TableCell align="right">{row.viva}</TableCell>
-                                <TableCell align="right">{row.totalMarks}</TableCell>
+            <Header />
+            <Box m={3} boxShadow={3}>
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="left">Roll No</TableCell>
+                                <TableCell align="left">Name</TableCell>
+                                <TableCell align="right">Ideation</TableCell>
+                                <TableCell align="right">Execution</TableCell>
+                                <TableCell align="right">Viva</TableCell>
+                                <TableCell align="right">Total Marks</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            {showButton && <Button variant="contained" color="primary" onClick={handlePrint}>
-                Print
-            </Button>}
-            {showButton && <Button variant="contained" id='emailButton' color="secondary" onClick={handleSendMail}>
-                Send Email
-            </Button>}
+                        </TableHead>
+                        <TableBody>
+                            {rows.map((row) => (
+                                <TableRow
+                                    key={row.name}
+                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                >
+                                    <TableCell component="th" scope="row">
+                                        {row.rollNo}
+                                    </TableCell>
+                                    <TableCell align="left">{row.name}</TableCell>
+                                    <TableCell align="right">{row.ideation}</TableCell>
+                                    <TableCell align="right">{row.execution}</TableCell>
+                                    <TableCell align="right">{row.viva}</TableCell>
+                                    <TableCell align="right">{row.totalMarks}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Box>
+
+            <Box display="flex" justifyContent="center" m={1}>
+                <Grid container spacing={2} justifyContent="center">
+                    {showButton &&
+                        <Grid item>
+                            <Button variant="contained" color="primary" onClick={handlePrint}>
+                                Print
+                            </Button>
+                        </Grid>
+                    }
+                    {showButton &&
+                        <Grid item>
+                            <Button variant="contained" id='emailButton' color="secondary" onClick={handleSendMail}>
+                                Send Email
+                            </Button>
+                        </Grid>
+                    }
+                </Grid>
+            </Box>
 
 
-            
+
+
             <Dialog
                 open={openDialog}
                 onClose={() => setOpenDialog(false)}

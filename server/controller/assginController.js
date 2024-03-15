@@ -12,6 +12,7 @@ export const assign = async (req, res) => {
                 isAssigned: true,
                 mentorEmail: mentor.email 
             }, { new: true });
+            await student.save();
             return student;
             
         }));
@@ -19,10 +20,34 @@ export const assign = async (req, res) => {
         const updatedMentor = await Mentor.findByIdAndUpdate(mentor._id, {
             $addToSet: { students: { $each: updatedStudents.map(student => student._id) } }
         }, { new: true });
+        await updatedMentor.save();
 
 
-        res.status(200).json({ message: "Students assigned successfully", updatedMentor });
+        res.status(200).json({ updatedMentor });
     } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: error.message });
+    }
+}
+
+export const removeAssigned = async (req, res) => {
+    try {
+        const { studentId, mentorId } = req.body;
+        console.log(studentId);
+        console.log(mentorId);
+
+        const student = await Student.findByIdAndUpdate(studentId, {
+            isAssigned: false,
+            mentorEmail: ''
+        }, { new: true });
+        await student.save();
+
+        const updatedMentor = await Mentor.findByIdAndUpdate(mentorId, {
+            $pull: { students: studentId }
+        }, { new: true });
+        await updatedMentor.save();
+        res.status(200).json({ updatedMentor });
+    } catch (error){
         console.error(error);
         res.status(500).json({ message: error.message });
     }

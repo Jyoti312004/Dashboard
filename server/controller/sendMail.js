@@ -4,6 +4,7 @@ import puppeteer from "puppeteer";
 export const sendMarkSheet = async (req, res) => {
   try {
     const { students } = req.body;
+    console.log(students);
     if (!students || students.length === 0) {
       return res.status(400).json({ message: "No student data provided" });
     }
@@ -154,6 +155,7 @@ export const sendMarkSheet = async (req, res) => {
         });
       })
     );
+    console.log("Emails sent successfully");
     res.status(200).json({ message: "Marksheet emails sent successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });

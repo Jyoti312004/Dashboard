@@ -55,5 +55,3 @@ mongoose.connect(process.env.MONGO_URL)
   app.use('/evaluations', evaluationRoutes);
   app.use('/student',lock);
   app.use('/mentor',mentor);
-
-

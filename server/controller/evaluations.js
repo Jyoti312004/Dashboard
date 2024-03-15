@@ -35,7 +35,7 @@ export const updateMarks =  async(req,res)=>{
         const student = await Student.findByIdAndUpdate(studentId, {
             marks: { ideation, execution, viva},
             totalMarks : updateMarks,
-            isEvaluated: true
+            isEvaluated : true
         });
 
         if (!student) {

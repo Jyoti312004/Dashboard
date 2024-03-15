@@ -3,31 +3,28 @@ import Mentor from '../models/Mentor.js';
 import Student from '../models/Student.js';
 const router = express.Router();
 
-export const getStudentInList = async(req,res)=>{
-try{
-    const {mentorId} = req.params;
-    console.log(mentorId);
-    const mentor = await Mentor.findById(mentorId);
-    
-    const data = mentor.students;
+export const getStudentInList = async (req, res) => {
+    try {
+        const { mentorId } = req.params;
+        console.log(mentorId);
+        const mentor = await Mentor.findById(mentorId);
 
-    const newdata = [];
+        const data = mentor.students
+
+        const newdata = [];
 
 
-    for (const studentId of data) {
-        const student = await Student.findById(studentId);
-        if (student) {
-            newdata.push(student);
+        for (const studentId of data) {
+            const student = await Student.findById(studentId);
+            if (student && !student.isFinal) {
+                newdata.push(student);
+            }
         }
+
+        res.status(200).json({ students: newdata });
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message })
     }
 
-    res.status(200).json({ students: newdata });
-   
-
 }
-catch(error){
-    res.status(500).json({message: error.message})
-}
-    
-}
-

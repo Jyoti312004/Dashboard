@@ -12,6 +12,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import TextField from '@mui/material/TextField';
 import DialogActions from '@mui/material/DialogActions';
+import Alert from '@mui/material/Alert';
 import axios from 'axios';
 
 function createData(rollNo, name, totalMarks, student) {
@@ -45,6 +46,7 @@ export default function StudentTable(props) {
     // Perform your action here
     if (ideation > 100 || ideation < 0 || execution > 100 || execution < 0 || viva > 100 || viva < 0) {
       alert('Marks should be between 0 and 100');
+      //<Alert severity="warning">Marks should be between 0 and 100</Alert>
       return;
     }
     const marks = { ideation, execution, viva };
@@ -100,7 +102,7 @@ export default function StudentTable(props) {
   };
   
   const handleSubmit = (student) => {
-    if (props.StudentList.length === 4) {
+    if (props.StudentList.length === 4 || (props.StudentList.length<4 && props.totalStudents == 0)) {
       setCurrentStudent(student);
       setOpenConfirm(true);
     }
@@ -136,7 +138,7 @@ export default function StudentTable(props) {
                   </Button>
                 </TableCell>
                 <TableCell align="right">
-                  <Button variant="contained" color="secondary" onClick={() => handleSubmit(row.student)} disabled={props.StudentList.length !== 4}>
+                  <Button variant="contained" color="secondary" onClick={() => handleSubmit(row.student)} disabled={props.StudentList.length !== 4 && props.totalStudents !=0}>
                     Lock
                   </Button>
                 </TableCell>
