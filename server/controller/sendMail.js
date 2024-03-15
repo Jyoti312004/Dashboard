@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import puppeteer from "puppeteer";
+// import puppeteer from "puppeteer";
 
 export const sendMarkSheet = async (req, res) => {
   try {
@@ -135,23 +135,32 @@ export const sendMarkSheet = async (req, res) => {
 
         `;
         console.log("before puppeteer");
-        const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-        await page.setContent(htmlContent);
-        const pdfBuffer = await page.pdf({ format: "Letter", landscape: true });
-        await browser.close();
-        console.log("after puppeteer");
+        const browser = await puppeteer.launch({
+            headless: false,
+            ignoreDefaultArgs: ["--disable-extensions"],
+            args: [
+              "--no-sandbox",
+              "--use-gl=egl",
+              "--disable-setuid-sandbox",
+            ],
+            ignoreHTTPSErrors: true,
+          });
+        // const page = await browser.newPage();
+        // await page.setContent(htmlContent);
+        // const pdfBuffer = await page.pdf({ format: "Letter", landscape: true });
+        // await browser.close();
+        // console.log("after puppeteer");
         await transporter.sendMail({
           from: process.env.USER_PASS,
           to: email,
           subject: `${name} Check your evaluated results`,
           html: mailContent,
-          attachments: [
-            {
-              filename: "marksheet.pdf",
-              content: pdfBuffer,
-            },
-          ],
+        //   attachments: [
+        //     {
+        //       filename: "marksheet.pdf",
+        //       content: pdfBuffer,
+        //     },
+        //   ],
         });
       })
     );
