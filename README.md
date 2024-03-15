@@ -1,6 +1,7 @@
 # Dashboard
 
 This project is a full-stack application that provides a dashboard interface for managing students and mentors.
+**note :- backend is on render and it will take some time to load so please wait upto 40sec and then start
 
 ## Client
 
