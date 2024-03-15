@@ -51,11 +51,13 @@ mongoose.connect(process.env.MONGO_URL)
     
     app.listen(PORT, () => console.log(`Server Port: ${PORT} && connected to database`));
   })
-app.get("/",(req,res)=>{
-  res.send("server is running");
-})
-
   .catch((error) => console.log(`${error} did not connect`));
-  app.use('/evaluations', evaluationRoutes);
+
+
+  app.use('/evaluations', evaluationRoutes); 
   app.use('/student',lock);
   app.use('/mentor',mentor);
+
+  app.get("/",(req,res)=>{
+    res.send("server is running");
+  }) 
