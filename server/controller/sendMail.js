@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 // import puppeteer from "puppeteer";
+import html_to_pdf from 'html-pdf-node';
 
 export const sendMarkSheet = async (req, res) => {
   try {
@@ -134,33 +135,34 @@ export const sendMarkSheet = async (req, res) => {
 </html>
 
         `;
-        console.log("before puppeteer");
-        const browser = await puppeteer.launch({
-            headless: false,
-            ignoreDefaultArgs: ["--disable-extensions"],
-            args: [
-              "--no-sandbox",
-              "--use-gl=egl",
-              "--disable-setuid-sandbox",
-            ],
-            ignoreHTTPSErrors: true,
-          });
+        //console.log("before puppeteer");
+        // const browser = await puppeteer.launch({
+        //     headless: false,
+        //     ignoreDefaultArgs: ["--disable-extensions"],
+        //     args: [
+        //       "--no-sandbox",
+        //       "--use-gl=egl",
+        //       "--disable-setuid-sandbox",
+        //     ],
+        //     ignoreHTTPSErrors: true,
+        //   });
         // const page = await browser.newPage();
         // await page.setContent(htmlContent);
         // const pdfBuffer = await page.pdf({ format: "Letter", landscape: true });
         // await browser.close();
         // console.log("after puppeteer");
+        const pdfBuffer = await html_to_pdf.generatePdf({ content: htmlContent }, { format: "A4" });
         await transporter.sendMail({
           from: process.env.USER_PASS,
           to: email,
           subject: `${name} Check your evaluated results`,
           html: mailContent,
-        //   attachments: [
-        //     {
-        //       filename: "marksheet.pdf",
-        //       content: pdfBuffer,
-        //     },
-        //   ],
+          attachments: [
+            {
+              filename: "marksheet.pdf",
+              content: pdfBuffer,
+            },
+          ],
         });
       })
     );
