@@ -134,13 +134,13 @@ export const sendMarkSheet = async (req, res) => {
 </html>
 
         `;
-
+        console.log("before puppeteer");
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
         await page.setContent(htmlContent);
         const pdfBuffer = await page.pdf({ format: "Letter", landscape: true });
         await browser.close();
-
+        console.log("after puppeteer");
         await transporter.sendMail({
           from: process.env.USER_PASS,
           to: email,
